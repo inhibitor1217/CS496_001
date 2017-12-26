@@ -18,12 +18,6 @@ import java.util.ArrayList;
 
 public class TabFragment1 extends Fragment {
 
-    private ListView listView;
-    private Pair<ArrayList<String>, ArrayList<String>> contact;
-
-    public void setContact(Pair<ArrayList<String>, ArrayList<String>> contact) {
-    }
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
