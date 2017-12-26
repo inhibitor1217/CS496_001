@@ -22,7 +22,6 @@ public class TabFragment1 extends Fragment {
     private Pair<ArrayList<String>, ArrayList<String>> contact;
 
     public void setContact(Pair<ArrayList<String>, ArrayList<String>> contact) {
-        this.contact = contact;
     }
 
     @Nullable
