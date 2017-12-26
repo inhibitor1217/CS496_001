@@ -18,4 +18,7 @@ public class TabFragment2 extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.tab_fragment_2, container, false);
     }
+
+    // git push test
+
 }
