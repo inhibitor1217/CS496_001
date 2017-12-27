@@ -2,7 +2,9 @@ package com.example.user.cs496_001;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ClipData;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -86,7 +88,7 @@ public class TabFragment2 extends Fragment {
                         uri = clipData.getItemAt(i).getUri();
                         imageList.add(uri);
                     }
-                    GridView grid = (GridView) getView().findViewById(R.id.gridView);
+                    final GridView grid = (GridView) getView().findViewById(R.id.gridView);
                     GridViewAdapter ImageAdapter = new GridViewAdapter(getActivity(), R.layout.grid_item, imageList);
                     grid.setAdapter(ImageAdapter);
 
@@ -97,6 +99,29 @@ public class TabFragment2 extends Fragment {
                             intent.putExtra("position", i);
                             intent.putExtra("uriList", imageList);
                             startActivity(intent);
+                        }
+
+                    });
+
+                    grid.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener(){
+                        @Override
+                        public boolean onItemLongClick(AdapterView<?> adapterView, View view, final int i, long l) {
+                            AlertDialog.Builder del_btn = new AlertDialog.Builder(getActivity());
+                            del_btn.setMessage("Do you want to delete this image?").setCancelable(false).setPositiveButton("Yes",
+                                    new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialogInterface, int j) {
+                                            imageList.remove(i);
+                                            GridViewAdapter newAdapter = new GridViewAdapter(getActivity(), R.layout.grid_item, imageList);
+                                            grid.setAdapter(newAdapter);
+                                        };
+                                    }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int j) {
+                                };
+                            });
+                            del_btn.show();
+                            return true;
                         }
                     });
 

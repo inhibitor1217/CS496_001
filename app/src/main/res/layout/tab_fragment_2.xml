@@ -17,13 +17,16 @@
         >
     </GridView>
 
+
     <Button
         android:id="@+id/load"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
+        android:layout_weight="1"
         android:layout_marginTop="5dp"
+        android:layout_gravity="bottom"
         android:text="Load Picture" />
+
 
 </FrameLayout>
 
