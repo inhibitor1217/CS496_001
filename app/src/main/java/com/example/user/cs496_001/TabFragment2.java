@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.Toast;
@@ -86,8 +87,18 @@ public class TabFragment2 extends Fragment {
                         imageList.add(uri);
                     }
                     GridView grid = (GridView) getView().findViewById(R.id.gridView);
-                    GridViewAdapter ImageAdapter = new GridViewAdapter(getActivity(),R.layout.grid_item, imageList);
+                    GridViewAdapter ImageAdapter = new GridViewAdapter(getActivity(), R.layout.grid_item, imageList);
                     grid.setAdapter(ImageAdapter);
+
+                    grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                            Intent intent = new Intent(getActivity(), PopUpActivity.class);
+                            intent.putExtra("position", i);
+                            intent.putExtra("uriList", imageList);
+                            startActivity(intent);
+                        }
+                    });
 
                 }else if (clipData == null){
                     Toast.makeText(getActivity(),"Choose picture at least one",Toast.LENGTH_SHORT).show();

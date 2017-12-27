@@ -21,6 +21,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".TabActivity"></activity>
+        <activity android:name=".PopUpActivity"></activity>
     </application>
 
 </manifest>
