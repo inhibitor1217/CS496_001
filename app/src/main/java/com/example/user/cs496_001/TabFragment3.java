@@ -7,10 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-/**
- * Created by user on 2017-12-26.
- */
-
 public class TabFragment3 extends Fragment {
 
     @Nullable

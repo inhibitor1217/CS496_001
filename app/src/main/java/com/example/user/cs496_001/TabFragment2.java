@@ -7,10 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-/**
- * Created by user on 2017-12-26.
- */
-
 public class TabFragment2 extends Fragment {
 
     @Nullable
@@ -18,7 +14,5 @@ public class TabFragment2 extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.tab_fragment_2, container, false);
     }
-
-    // git push test
 
 }

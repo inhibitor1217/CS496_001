@@ -4,41 +4,36 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-/**
- * Created by user on 2017-12-26.
- */
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class TabPagerAdapter extends FragmentStatePagerAdapter {
 
-    private int tabCount;
+    private final List<Fragment> mFragments = new ArrayList<>();
+    private final List<String> mFragmentTitles = new ArrayList<>();
 
-    public TabPagerAdapter(FragmentManager fm, int tabCount) {
+    public TabPagerAdapter(FragmentManager fm) {
         super(fm);
-        this.tabCount = tabCount;
+    }
+
+    public void addFragment(Fragment fragment, String title) {
+        mFragments.add(fragment);
+        mFragmentTitles.add(title);
     }
 
     @Override
     public Fragment getItem(int position) {
-        switch(position) {
-
-            case 0:
-                TabFragment1 tabFragment1 = new TabFragment1();
-                return tabFragment1;
-            case 1:
-                TabFragment2 tabFragment2 = new TabFragment2();
-                return tabFragment2;
-            case 2:
-                TabFragment3 tabFragment3 = new TabFragment3();
-                return tabFragment3;
-            default:
-                return null;
-
-        }
+        return mFragments.get(position);
     }
 
     @Override
     public int getCount() {
-        return tabCount;
+        return mFragments.size();
+    }
+
+    public CharSequence getPageTitle(int position) {
+        return mFragmentTitles.get(position);
     }
 
 }
