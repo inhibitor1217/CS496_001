@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private final int MY_PERMISSIONS_REQUEST_READ_CONTACTS = 42;
     public static ArrayList<Pair<String, String>> CONTACTS;
 
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }
     }
-
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
