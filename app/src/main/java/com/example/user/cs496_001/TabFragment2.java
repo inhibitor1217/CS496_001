@@ -107,7 +107,7 @@ public class TabFragment2 extends Fragment {
                         @Override
                         public boolean onItemLongClick(AdapterView<?> adapterView, View view, final int i, long l) {
                             AlertDialog.Builder del_btn = new AlertDialog.Builder(getActivity());
-                            del_btn.setMessage("Do you want to delete this image?").setCancelable(false).setPositiveButton("Yes",
+                            del_btn.setMessage("이미지를 삭제하시겠습니까?").setCancelable(false).setPositiveButton("확인",
                                     new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialogInterface, int j) {
@@ -115,7 +115,7 @@ public class TabFragment2 extends Fragment {
                                             GridViewAdapter removeAdapter = new GridViewAdapter(getActivity(), R.layout.grid_item, imageList);
                                             grid.setAdapter(removeAdapter);
                                         };
-                                    }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                    }).setNegativeButton("취소", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int j) {
                                 };
@@ -126,10 +126,10 @@ public class TabFragment2 extends Fragment {
                     });
 
                 }else if (clipData == null){
-                    Toast.makeText(getActivity(),"Choose picture at least one",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(),"하나 이상의 사진을 선택하세요.",Toast.LENGTH_SHORT).show();
                     return;
                 }else{
-                    Toast.makeText(getActivity(),"Choose picture up to 10",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(),"10개 이하의 사진을 선택하세요.",Toast.LENGTH_SHORT).show();
                     return;
                 }
 
