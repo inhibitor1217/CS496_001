@@ -1,9 +1,5 @@
 package com.example.user.cs496_001;
 
-/**
- * Created by user on 2017-12-27.
- */
-
 import android.Manifest;
 import android.app.Activity;
 import android.content.ClipData;
@@ -34,23 +30,27 @@ public class TabFragment2 extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+
         imageList = new ArrayList<>();
-        return inflater.inflate(R.layout.tab_fragment_2, container, false);
+        View resultView = inflater.inflate(R.layout.tab_fragment_2, container, false);
 
-    }
+        Button loadImageButton = (Button) resultView.findViewById(R.id.load);
+        loadImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+                public void onClick(View view) {
+                if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_CODE);
+                } else {
+                    Intent galleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    galleryIntent.setData(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    galleryIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+                    galleryIntent.setType("image/*");
+                    startActivityForResult(galleryIntent, PERMISSION_CODE);
+                }
+            }
+        });
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
-    public void load(View v){
-
-        if (ActivityCompat.checkSelfPermission((Activity) getContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions((Activity) getContext(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_CODE);
-        } else {
-            Intent galleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            galleryIntent.setData(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            galleryIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-            galleryIntent.setType("image/*");
-            startActivityForResult(galleryIntent, PERMISSION_CODE);
-        }
+        return resultView;
 
     }
 

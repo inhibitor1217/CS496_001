@@ -13,10 +13,6 @@ import android.widget.ImageView;
 import java.io.IOException;
 import java.util.ArrayList;
 
-/**
- * Created by user on 2017-12-26.
- */
-
 public class GridViewAdapter extends ArrayAdapter {
     private int layoutResourceId;
     private Context context;
