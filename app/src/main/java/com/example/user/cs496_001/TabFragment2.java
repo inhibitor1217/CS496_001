@@ -112,8 +112,8 @@ public class TabFragment2 extends Fragment {
                                         @Override
                                         public void onClick(DialogInterface dialogInterface, int j) {
                                             imageList.remove(i);
-                                            GridViewAdapter newAdapter = new GridViewAdapter(getActivity(), R.layout.grid_item, imageList);
-                                            grid.setAdapter(newAdapter);
+                                            GridViewAdapter removeAdapter = new GridViewAdapter(getActivity(), R.layout.grid_item, imageList);
+                                            grid.setAdapter(removeAdapter);
                                         };
                                     }).setNegativeButton("No", new DialogInterface.OnClickListener() {
                                 @Override
