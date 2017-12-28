@@ -13,7 +13,7 @@ import android.widget.ListView;
 
 public class TabFragment1 extends Fragment {
 
-    @Nullable
+    @org.jetbrains.annotations.Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 

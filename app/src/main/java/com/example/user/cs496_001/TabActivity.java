@@ -25,9 +25,9 @@ public class TabActivity extends AppCompatActivity {
         viewPager = (ViewPager) findViewById(R.id.pager);
         TabPagerAdapter adapter = new TabPagerAdapter(getSupportFragmentManager());
 
-        adapter.addFragment(new TabFragment1(), "TAB A");
-        adapter.addFragment(new TabFragment2(), "TAB B");
-        adapter.addFragment(new TabFragment3(), "TAB C");
+        adapter.addFragment(new TabFragment1(), "주소록");
+        adapter.addFragment(new TabFragment2(), "사진첩");
+        adapter.addFragment(new TabFragment3(), "만보기");
 
         viewPager.setAdapter(adapter);
 

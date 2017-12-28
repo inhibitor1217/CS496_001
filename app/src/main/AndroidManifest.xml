@@ -20,6 +20,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <service android:name=".StepCheckService" android:enabled="true">
+            <intent-filter>
+                <action android:name="app.manbo.Service"/>
+            </intent-filter>
+
+        </service>
         <activity android:name=".TabActivity"></activity>
         <activity android:name=".PopUpActivity"></activity>
     </application>
