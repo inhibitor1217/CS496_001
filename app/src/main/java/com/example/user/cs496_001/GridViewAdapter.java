@@ -1,9 +1,11 @@
 package com.example.user.cs496_001;
 
+import android.content.ContentResolver;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,23 +33,62 @@ public class GridViewAdapter extends ArrayAdapter {
         if(convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.grid_item, parent, false);
         }
+
         imageView = (ImageView) convertView.findViewById(R.id.img);
 
-        Bitmap bitmap = null;
-        try {
-            bitmap = MediaStore.Images.Media.getBitmap(context.getContentResolver(), data.get(position));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        ViewHolder holder = new ViewHolder(imageView);
+        holder.position = position;
 
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inSampleSize = 4;
-        Bitmap resized = Bitmap.createScaledBitmap(bitmap, 100, 100, true);
-        imageView.setImageBitmap(resized);
+        new ThumbnailTask(position, holder, context.getContentResolver(), data).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, null);
 
-        return imageView;
+        return convertView;
     }
 
+    private static class ThumbnailTask extends AsyncTask {
+
+        private int mPosition;
+        private ViewHolder mHolder;
+        private ContentResolver contentResolver;
+        private ArrayList<Uri> data;
+
+        public ThumbnailTask(int position, ViewHolder holder, ContentResolver contentResolver, ArrayList<Uri> data) {
+            this.mPosition = position;
+            this.mHolder = holder;
+            this.contentResolver = contentResolver;
+            this.data = data;
+        }
+
+        @Override
+        protected Object doInBackground(Object[] objects) {
+            Bitmap bitmap = null;
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(contentResolver, data.get(mPosition));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inSampleSize = 4;
+            Bitmap resized = Bitmap.createScaledBitmap(bitmap, 100, 100, true);
+            return resized;
+        }
+
+        @Override
+        protected void onPostExecute(Object o) {
+            if(mHolder.position == mPosition) {
+                mHolder.thumbnail.setImageBitmap((Bitmap) o);
+            }
+        }
+    }
+
+    private static class ViewHolder {
+        public ImageView thumbnail;
+        public int position;
+
+        public ViewHolder(ImageView imageView) {
+            this.thumbnail = imageView;
+        }
+    }
 
 }
 

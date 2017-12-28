@@ -28,7 +28,9 @@ import java.util.ArrayList;
 public class TabFragment2 extends Fragment {
     int PERMISSION_CODE = 100;
     final int REQ_CODE_SELECT_IMAGE=100;
-    ArrayList imageList;
+    private ArrayList<Uri> imageList;
+    private GridViewAdapter gridViewAdapter;
+    private GridView grid;
 
     @Nullable
     @Override
@@ -36,6 +38,10 @@ public class TabFragment2 extends Fragment {
 
         imageList = new ArrayList<>();
         View resultView = inflater.inflate(R.layout.tab_fragment_2, container, false);
+
+        grid = (GridView) resultView.findViewById(R.id.gridView);
+        gridViewAdapter = new GridViewAdapter(getActivity(), R.layout.grid_item, imageList);
+        grid.setAdapter(gridViewAdapter);
 
         Button loadImageButton = (Button) resultView.findViewById(R.id.load);
         loadImageButton.setOnClickListener(new View.OnClickListener() {
@@ -88,9 +94,7 @@ public class TabFragment2 extends Fragment {
                         uri = clipData.getItemAt(i).getUri();
                         imageList.add(uri);
                     }
-                    final GridView grid = (GridView) getView().findViewById(R.id.gridView);
-                    GridViewAdapter ImageAdapter = new GridViewAdapter(getActivity(), R.layout.grid_item, imageList);
-                    grid.setAdapter(ImageAdapter);
+                    gridViewAdapter.notifyDataSetChanged();
 
                     grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
@@ -112,13 +116,12 @@ public class TabFragment2 extends Fragment {
                                         @Override
                                         public void onClick(DialogInterface dialogInterface, int j) {
                                             imageList.remove(i);
-                                            GridViewAdapter removeAdapter = new GridViewAdapter(getActivity(), R.layout.grid_item, imageList);
-                                            grid.setAdapter(removeAdapter);
+                                            gridViewAdapter.notifyDataSetChanged();
                                         };
                                     }).setNegativeButton("취소", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int j) {
-                                };
+                                }
                             });
                             del_btn.show();
                             return true;
