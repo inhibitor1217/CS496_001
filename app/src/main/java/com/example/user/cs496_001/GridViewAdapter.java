@@ -74,10 +74,14 @@ public class GridViewAdapter extends ArrayAdapter {
         }
 
         @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            mHolder.thumbnail.setImageResource(R.mipmap.loading);
+        }
+
+        @Override
         protected void onPostExecute(Object o) {
-            if(mHolder.position == mPosition) {
-                mHolder.thumbnail.setImageBitmap((Bitmap) o);
-            }
+            mHolder.thumbnail.setImageBitmap((Bitmap) o);
         }
     }
 
