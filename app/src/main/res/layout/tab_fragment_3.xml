@@ -1,25 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-<<<<<<< HEAD
     android:layout_height="match_parent">
-=======
-    android:layout_height="match_parent"
-    android:orientation="vertical">
->>>>>>> 0a4916cb156475697a9b78abd9a7fca23efc8490
 
     <TextView
         android:id="@+id/count"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-<<<<<<< HEAD
         android:layout_gravity="top"
         android:paddingTop="40dp"
-=======
->>>>>>> 0a4916cb156475697a9b78abd9a7fca23efc8490
         android:textSize="200sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -27,17 +20,18 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:text="안녕"
-        android:layout_weight="4"
         />
 
     <TextView
         android:id="@+id/cal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/count"
+        android:paddingTop="50dp"
+        android:paddingBottom="200dp"
         android:text="0분 동안 0칼로리를 소모했습니다."
         android:textSize="20sp"
         android:textAlignment="center"
-        android:layout_weight="4"
         />
 
     <Button
@@ -47,8 +41,9 @@
         android:text="게임 시작"
         android:textSize="50sp"
         android:textAlignment="center"
-        android:layout_weight="2"
+        android:layout_below="@id/cal"
+        android:layout_alignParentBottom="true"
         />
 
 
-</LinearLayout>
+</RelativeLayout>
