@@ -22,7 +22,7 @@ public class TabFragment3 extends Fragment {
 
     Intent manboService;
     BroadcastReceiver receiver;
-    boolean flag = true;
+    private int state = 0;
     String serviceData;
     TextView count,cal;
     Button button;
@@ -48,51 +48,65 @@ public class TabFragment3 extends Fragment {
             @Override
             public void onClick(View v) {
 
-                if( button.getText().equals("게임 시작") ){
-                    AlertDialog.Builder popup = new AlertDialog.Builder(v.getContext());
-                    popup.setTitle("만보기 건강하게 사용하기!");
-                    popup.setMessage("몸무게는?");
-                    final EditText ask = new EditText(v.getContext());
-                    popup.setView(ask);
+                switch(state) {
+                    case 0:
+                        AlertDialog.Builder popup = new AlertDialog.Builder(v.getContext());
+                        popup.setTitle("만보기 건강하게 사용하기!");
+                        popup.setMessage("몸무게는?");
+                        final EditText ask = new EditText(v.getContext());
+                        popup.setView(ask);
 
-                    popup.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            try{
-                                weight = Integer.parseInt(ask.getText().toString());
-                            }catch(NumberFormatException e){
-                                Toast.makeText(getActivity(), "시작 버튼을 눌러주세요", Toast.LENGTH_SHORT).show();
-                                flag = !flag;
+                        popup.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                try {
+                                    weight = Integer.parseInt(ask.getText().toString());
+                                    button.setText("정지");
+                                    try {
+                                        start = System.currentTimeMillis();
+                                        end = 0;
+                                        IntentFilter mainFilter = new IntentFilter("counter");
+                                        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(receiver, mainFilter);
+                                        getActivity().startService(manboService);
+                                    } catch (Exception e) {
+                                        Toast.makeText(getActivity().getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                    state = 2;
+                                } catch (NumberFormatException e) {
+                                    Toast.makeText(getActivity(), "숫자만 입력해주세요.", Toast.LENGTH_SHORT).show();
+                                }
+
                             }
+                        });
+                        popup.show();
+                        break;
 
+                    case 1:
+                        button.setText("정지");
+                        try {
+                            start = System.currentTimeMillis();
+                            end = 0;
+                            IntentFilter mainFilter = new IntentFilter("counter");
+                            LocalBroadcastManager.getInstance(getActivity()).registerReceiver(receiver, mainFilter);
+                            getActivity().startService(manboService);
+                        } catch (Exception e) {
+                            Toast.makeText(getActivity().getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
-                    });
-                    popup.show();
+                        state = 2;
+                        break;
 
+                    case 2:
+                        button.setText("시작");
+                        try {
+                            end = System.currentTimeMillis();
+                            LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(receiver);
+                            getActivity().stopService(manboService);
+                        } catch (Exception e) {
+                            Toast.makeText(getActivity().getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                        state = 1;
+                        break;
                 }
-                if (flag) {
-                    button.setText("정지");
-                    try {
-                        start = System.currentTimeMillis();
-                        end = 0;
-                        IntentFilter mainFilter = new IntentFilter("counter");
-                        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(receiver, mainFilter);
-                        getActivity().startService(manboService);
-                    } catch (Exception e) {
-                        Toast.makeText(getActivity().getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-
-                } else {
-                    button.setText("시작");
-                    try {
-                        end = System.currentTimeMillis();
-                        LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(receiver);
-                        getActivity().stopService(manboService);
-                    } catch (Exception e) {
-                        Toast.makeText(getActivity().getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
-                    }
-                }
-                flag = !flag;
             }
         });
 
